@@ -37,7 +37,7 @@ class VisitorPageClass:
         self.driver.switch_to.frame(self.driver.find_element(By.ID, "comment-editor"))
         time.sleep(3)
         element = self.driver.find_element(By.XPATH, "//*[@id='yDmH0d']/c-wiz/div/div/c-wiz/div/div/div[2]/div[2]/div[1]/div[2]/textarea")
-        element.send_keys("this is my comment")
+        element.send_keys("this is not jedi, just a kid")
         time.sleep(3)
         self.driver.find_element(By.XPATH,"//*[@id='yDmH0d']/c-wiz/div/div/c-wiz/div/div/div[2]/div[3]/div[1]/div/span/span").click()
         self.driver.switch_to.default_content()
