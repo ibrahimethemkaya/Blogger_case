@@ -1,43 +1,30 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from Test.PageObjectModels import LoginPageObject
-from Test.PageObjectModels import HomePageObject
-from Test.PageObjectModels import PostingPageObject
-from selenium.webdriver.common.by import By
+from Test.PageObjectModels import LoginPageObject,HomePageObject,PostingPageObject
 import time
 import pytest
+from Test.Config import config
+
 
 class TestAddpost:
 
     @pytest.mark.run(order=2)
-    def test_adding_post(self):
-        serv_obj = Service("C:\Drivers\chromedriver_win64\chromedriver-win64\chromedriver.exe")
-        self.driver = webdriver.Chrome(service=serv_obj)
-        self.driver.get("https://www.blogger.com/about/?bpli=1")
-        self.driver.maximize_window()
-        self.driver.implicitly_wait(10)
-
+    def test_adding_post(self,openBrowser):
+        self.driver = openBrowser
+        self.config = config.ConfigClass(self.driver)
         self.lp = LoginPageObject.LoginPageClass(self.driver)
         self.hp = HomePageObject.HomePageClass(self.driver)
-        self.pp = PostingPageObject.PostingPageClass(self.driver)
 
+        self.config.set_by_url(config.main_URL)
         assert self.lp.isSignInEnabled()
         self.lp.clickSignIn()
         time.sleep(3)
-        self.lp.sendMail("blogger.for.test.ntt@gmail.com")
+        self.lp.applyLogin(self.lp.admin_mail, self.lp.admin_password)
         time.sleep(3)
-        self.lp.clickNext()
-        time.sleep(3)
-        self.lp.sendPassword("Downloading456.")
-        time.sleep(3)
-        self.lp.clickNext()
-        time.sleep(3)
-        assert self.lp.isLoginSuccessful()
-        self.hp.clickLastPost()
-        time.sleep(3)
-        self.hp.edit_post()
-        time.sleep(3)
-        self.driver.quit()
+        assert self.hp.isLoginSuccessful()
+        self.hp.applyEdit()
+        assert self.hp.is_update_enabled()
+        self.config.tearDown()
+
+
 
 
 

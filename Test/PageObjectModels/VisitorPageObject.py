@@ -8,36 +8,36 @@ class VisitorPageClass:
     # password : Downloading456.
 
     #Locators
-    button_commend_class = "num_comments"
+    button_comment_class = "num_comments"
     frame_ID = "comment-editor"
     button_sign_in_xpath = "//*[@id='yDmH0d']/c-wiz/div/div/c-wiz/div/div[1]"
-    commend_ID = "FeaturedPost1"
+    comment_ID = "FeaturedPost1"
+    textbox_comment_xpath = "//*[@id='yDmH0d']/c-wiz/div/div/c-wiz/div/div/div[2]/div[2]/div[1]/div[2]/textarea"
+    button_send_comment_xpath = "//*[@id='yDmH0d']/c-wiz/div/div/c-wiz/div/div/div[2]/div[3]/div[1]/div/span/span"
 
-    #constructor
     def __init__(self,driver):
         self.driver = driver
 
-    def clickCommendBtn(self):
-        self.driver.find_element(By.CLASS_NAME, self.button_commend_class).click()
+    def clickCommentBtn(self):
+        self.driver.find_element(By.CLASS_NAME, self.button_comment_class).click()
 
     def clickSignIn(self):
-        self.driver.switch_to.frame(self.driver.find_element(By.ID, "comment-editor"))
+        self.driver.switch_to.frame(self.driver.find_element(By.ID, self.frame_ID))
         time.sleep(2)
-        self.driver.find_element(By.XPATH, "//*[@id='yDmH0d']/c-wiz/div/div/c-wiz/div/div[1]").click()
+        self.driver.find_element(By.XPATH, self.button_sign_in_xpath).click()
         self.driver.switch_to.default_content()
 
     def isCommentVisible(self):
-        if self.driver.find_element(By.ID, self.commend_ID):
+        if self.driver.find_element(By.ID, self.comment_ID):
             return True
         else:
             return False
 
-
-    def sendCommendMessage(self):
-        self.driver.switch_to.frame(self.driver.find_element(By.ID, "comment-editor"))
+    def sendCommentMessage(self):
+        self.driver.switch_to.frame(self.driver.find_element(By.ID, self.frame_ID))
         time.sleep(3)
-        element = self.driver.find_element(By.XPATH, "//*[@id='yDmH0d']/c-wiz/div/div/c-wiz/div/div/div[2]/div[2]/div[1]/div[2]/textarea")
+        element = self.driver.find_element(By.XPATH, self.textbox_comment_xpath)
         element.send_keys("this is not jedi, just a kid")
         time.sleep(3)
-        self.driver.find_element(By.XPATH,"//*[@id='yDmH0d']/c-wiz/div/div/c-wiz/div/div/div[2]/div[3]/div[1]/div/span/span").click()
+        self.driver.find_element(By.XPATH,self.button_send_comment_xpath).click()
         self.driver.switch_to.default_content()

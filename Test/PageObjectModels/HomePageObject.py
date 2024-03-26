@@ -8,12 +8,12 @@ import time
 class HomePageClass:
     # Locators
     button_new_post_CSS = "c-wiz[class='zQTmif SSPGKf eejsDc qWnhY O3LMFb haXJ6e'] div[class='Iun9']"
-    button_select_image_xpath = "//div[@class='kKlVTb']//div[@class='CQapMb']"
-    button_by_Url_CSS = "div[class='JPdR6b e5Emjc qjTEB'] span[aria-label='By URL']"
     posts_last_class = "gNK4lf"
     button_comments_CSS = "c-wiz[class='zQTmif SSPGKf eejsDc qWnhY O3LMFb haXJ6e'] span[aria-label='Comments'] div[class='kurlme DQGx6d']"
-
-
+    button_update_CSS = "div[aria-label='Update'] span[class='CwaK9']"
+    frame_className = "ZW3ZFc"
+    textbox_className = "editable"
+    comment_text = " This is Killer Yoda"
 
     # constructor
     def __init__(self, driver):
@@ -22,34 +22,34 @@ class HomePageClass:
     # action methods
     def clickNewPost(self):
         self.driver.find_element(By.CSS_SELECTOR, self.button_new_post_CSS).click()
-
-    def click_select_image(self):
-        self.driver.find_element(By.XPATH, self.button_select_image_xpath).click()
-
-    def click_by_Url(self):
-        self.driver.find_element(By.CSS_SELECTOR, self.button_by_Url_CSS).click()
-
-    def send_url(self):
-        self.driver.switch_to.frame(self.driver.find_element(By.XPATH, "/html/body/div[11]/div[2]/div/iframe"))
-        txtbox_url = self.driver.find_element(By.ID, ":c")
-        pyperclip.copy("https://i.etsystatic.com/40317824/r/il/1fc564/4850621406/il_794xN.4850621406_lxg6.jpg")
-        txtbox_url.send_keys(Keys.CONTROL, 'v')
+    def isLoginSuccessful(self):
+        return self.driver.find_element(By.CSS_SELECTOR, self.button_new_post_CSS).is_enabled()
 
     def clickLastPost(self):
         elements = self.driver.find_elements(By.CLASS_NAME,self.posts_last_class)
-        elements[0].click()
+        if elements[0].is_enabled():
+            elements[0].click()
 
     def edit_post(self):
-        self.driver.switch_to.frame(self.driver.find_element(By.CLASS_NAME, "ZW3ZFc"))
+        self.driver.switch_to.frame(self.driver.find_element(By.CLASS_NAME, self.frame_className))
         time.sleep(2)
-        txtbox_edit = self.driver.find_element(By.CLASS_NAME, "editable")
+        textbox_edit = self.driver.find_element(By.CLASS_NAME, self.textbox_className)
         time.sleep(2)
-        pyperclip.copy(" this is killer yoda")
-        txtbox_edit.send_keys(Keys.CONTROL, 'v')
+        pyperclip.copy(self.comment_text)
+        textbox_edit.send_keys(Keys.CONTROL, 'v')
         self.driver.switch_to.default_content()
         time.sleep(2)
-        self.driver.find_element(By.CSS_SELECTOR,"div[aria-label='Update'] span[class='CwaK9']").click()
+        self.driver.find_element(By.CSS_SELECTOR,self.button_update_CSS).click()
 
+    def applyEdit(self):
+        self.clickLastPost()
+        time.sleep(3)
+        self.edit_post()
+        time.sleep(3)
+
+    def is_update_enabled(self):
+        status = self.driver.find_element(By.CSS_SELECTOR,self.button_update_CSS).is_enabled()
+        return status
     def click_publish(self):
         self.driver.switch_to.frame(self.driver.find_element(By.CLASS_NAME, "ZW3ZFc"))
 
