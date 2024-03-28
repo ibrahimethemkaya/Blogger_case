@@ -1,3 +1,5 @@
+import logging
+
 main_URL = "https://www.blogger.com/about/?bpli=1"
 visitor_URl = "https://killeryodanttdata.blogspot.com/"
 class ConfigClass:
@@ -12,3 +14,5 @@ class ConfigClass:
 
     def tearDown(self):
         self.driver.quit()
+
+

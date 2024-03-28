@@ -1,3 +1,4 @@
+import logging
 import unittest
 
 import pytest
@@ -12,3 +13,14 @@ def openBrowser():
     serv_obj = Service("C:\Drivers\chromedriver_win64\chromedriver-win64\chromedriver.exe")
     driver = webdriver.Chrome(service=serv_obj)
     return driver
+
+
+def loggerInit(self, name):
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.INFO)
+    # Dosyaya logları yazma
+    file_handler = logging.FileHandler(filename="test_log", mode="w")
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
+    return logger
