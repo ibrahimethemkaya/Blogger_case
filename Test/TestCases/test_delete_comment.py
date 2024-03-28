@@ -1,42 +1,30 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from Test.PageObjectModels import LoginPageObject, CommentsPageObject
-from Test.PageObjectModels import HomePageObject
-from selenium.webdriver.common.by import By
+from Test.PageObjectModels import LoginPageObject, CommentsPageObject, HomePageObject
+from Test.Config import config
 import pytest
 import time
+
+
 class TestDeleteComment:
 
     @pytest.mark.run(order=4)
-    def test_delete_comment(self):
+    def test_delete_comment(self, openBrowser):
+        self.driver = openBrowser
 
-            serv_obj = Service("C:\Drivers\chromedriver_win64\chromedriver-win64\chromedriver.exe")
-            self.driver = webdriver.Chrome(service=serv_obj)
-            self.driver.get("https://www.blogger.com/about/?bpli=1")
-            self.driver.maximize_window()
-            self.driver.implicitly_wait(10)
+        self.config = config.ConfigClass(self.driver)
+        self.lp = LoginPageObject.LoginPageClass(self.driver)
+        self.hp = HomePageObject.HomePageClass(self.driver)
+        self.cp = CommentsPageObject.CommentsPageClass(self.driver)
 
-            self.lp = LoginPageObject.LoginPageClass(self.driver)
-            self.hp = HomePageObject.HomePageClass(self.driver)
-            self.cp = CommentsPageObject.CommentsPageClass(self.driver)
-
-            assert self.lp.isSignInEnabled()
-            self.lp.clickSignIn()
-            time.sleep(3)
-            self.lp.sendMail("blogger.for.test.ntt@gmail.com")
-            time.sleep(3)
-            self.lp.clickNext()
-            time.sleep(3)
-            self.lp.sendPassword("Downloading456.")
-            time.sleep(3)
-            self.lp.clickNext()
-            time.sleep(3)
-            self.hp.clickComments()
-            time.sleep(3)
-            assert self.cp.isCommentVisible()
-            time.sleep(2)
-            self.cp.commentDeleteIcon()
-            time.sleep(2)
-            self.cp.commentDeleteButton()
-            time.sleep(3)
-            self.driver.quit()
+        self.config.set_by_url(config.main_URL)
+        assert self.lp.isSignInEnabled()
+        self.lp.clickSignIn()
+        time.sleep(3)
+        self.lp.applyLogin(self.lp.admin_mail, self.lp.admin_password)
+        time.sleep(3)
+        assert self.hp.isLoginSuccessful()
+        self.hp.clickComments()
+        self.cp.verifyComment()
+        time.sleep(2)
+        self.cp.commentDelete()
+        time.sleep(3)
+        self.config.tearDown()

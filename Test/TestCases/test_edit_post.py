@@ -3,7 +3,6 @@ import time
 import pytest
 from Test.Config import config
 
-
 class TestAddpost:
 
     @pytest.mark.run(order=2)
@@ -21,8 +20,9 @@ class TestAddpost:
         time.sleep(3)
         assert self.hp.isLoginSuccessful()
         self.hp.applyEdit()
-        assert self.hp.is_update_enabled()
+        assert self.hp.is_update_enabled()  #bu kısmı sor
         self.config.tearDown()
+        self.logger.info
 
 
 

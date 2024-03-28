@@ -14,14 +14,13 @@ class VisitorPageClass:
     comment_ID = "FeaturedPost1"
     textbox_comment_xpath = "//*[@id='yDmH0d']/c-wiz/div/div/c-wiz/div/div/div[2]/div[2]/div[1]/div[2]/textarea"
     button_send_comment_xpath = "//*[@id='yDmH0d']/c-wiz/div/div/c-wiz/div/div/div[2]/div[3]/div[1]/div/span/span"
+    button_visit_profile_xpath = "//a[normalize-space()='Visit profile']"
 
     def __init__(self,driver):
         self.driver = driver
 
-    def clickCommentBtn(self):
+    def click_sign_in(self):
         self.driver.find_element(By.CLASS_NAME, self.button_comment_class).click()
-
-    def clickSignIn(self):
         self.driver.switch_to.frame(self.driver.find_element(By.ID, self.frame_ID))
         time.sleep(2)
         self.driver.find_element(By.XPATH, self.button_sign_in_xpath).click()
@@ -32,6 +31,9 @@ class VisitorPageClass:
             return True
         else:
             return False
+
+    def isBlogPageDisplayed(self):
+        return self.driver.find_element(By.XPATH,self.button_visit_profile_xpath).is_displayed()
 
     def sendCommentMessage(self):
         self.driver.switch_to.frame(self.driver.find_element(By.ID, self.frame_ID))
