@@ -17,9 +17,6 @@ class ViewBlogPageClass:
 
 
     #action methods
-    def countComments(self):
-
-        print(self.driver.find_element(By.CLASS_NAME, self.button_comments_class).text)
 
     def is_comment_deleted(self):
         if self.driver.find_element(By.CLASS_NAME, self.button_comments_class).text.__contains__('Post'):

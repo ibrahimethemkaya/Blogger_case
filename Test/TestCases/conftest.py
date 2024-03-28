@@ -3,6 +3,7 @@ import unittest
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.edge.service import Service
 
 
 # class Confest(unittest.TestCase): #log atmaya yarar

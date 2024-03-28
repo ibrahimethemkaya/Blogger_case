@@ -2,10 +2,20 @@ from Test.PageObjectModels import LoginPageObject, CommentsPageObject, HomePageO
 from Test.Config import config
 import pytest
 import time
-
-
 class TestDeleteComment:
-
+    """
+       Steps:
+           1. Initialize driver and necessary page objects.
+           2. Set configuration using the main URL.
+           3. Assert if sign-in option is enabled.
+           4. Click on sign-in.
+           5. Perform login using admin credentials.
+           6. Assert if login is successful.
+           7. Click on 'Comments' option.
+           8. Verify if a comment exists.
+           9. Perform comment deletion.
+           10. Perform teardown actions.
+       """
     @pytest.mark.run(order=4)
     def test_delete_comment(self, openBrowser):
         self.driver = openBrowser
@@ -23,7 +33,7 @@ class TestDeleteComment:
         time.sleep(3)
         assert self.hp.isLoginSuccessful()
         self.hp.clickComments()
-        self.cp.verifyComment()
+        assert self.cp.verifyComment()
         time.sleep(2)
         self.cp.commentDelete()
         time.sleep(3)

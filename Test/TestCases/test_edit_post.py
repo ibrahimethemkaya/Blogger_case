@@ -4,7 +4,18 @@ import pytest
 from Test.Config import config
 
 class TestAddpost:
-
+    """
+        Steps:
+            1. Initialize driver and necessary page objects.
+            2. Set configuration using the main URL.
+            3. Assert if sign-in option is enabled.
+            4. Click on sign-in.
+            5. Perform login using admin credentials.
+            6. Assert if login is successful.
+            7. Apply editing operation on the home page.
+            8. Assert if update option is enabled.
+            9. Perform teardown actions.
+        """
     @pytest.mark.run(order=2)
     def test_adding_post(self,openBrowser):
         self.driver = openBrowser
@@ -20,9 +31,9 @@ class TestAddpost:
         time.sleep(3)
         assert self.hp.isLoginSuccessful()
         self.hp.applyEdit()
-        assert self.hp.is_update_enabled()  #bu kısmı sor
+        assert self.hp.is_update_enabled()
         self.config.tearDown()
-        self.logger.info
+
 
 
 
