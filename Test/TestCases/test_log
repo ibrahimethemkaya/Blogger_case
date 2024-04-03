@@ -1,0 +1,6 @@
+2024-04-01 16:37:17,879 - TestAddPost - INFO - Starting test_adding_post...
+2024-04-01 16:37:17,879 - TestAddPost - INFO - Browser initialized successfully.
+2024-04-01 16:37:17,879 - TestAddPost - INFO - Configurations initialized successfully.
+2024-04-01 16:37:20,520 - TestAddPost - INFO - Sign-in is enabled.
+2024-04-01 16:37:20,561 - TestAddPost - INFO - Clicked on sign-in button.
+2024-04-01 16:37:33,086 - TestAddPost - INFO - Applied login credentials.

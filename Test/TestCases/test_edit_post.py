@@ -1,43 +1,53 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from Test.PageObjectModels import LoginPageObject
-from Test.PageObjectModels import HomePageObject
-from Test.PageObjectModels import PostingPageObject
-from selenium.webdriver.common.by import By
+from Test.PageObjectModels import LoginPageObject,HomePageObject,PostingPageObject
 import time
 import pytest
+from Test.Config import config
+from Test.TestCases.conftest import loggerInit
+
 
 class TestAddpost:
-
-    @pytest.mark.run(order=2)
-    def test_adding_post(self):
-        serv_obj = Service("C:\Drivers\chromedriver_win64\chromedriver-win64\chromedriver.exe")
-        self.driver = webdriver.Chrome(service=serv_obj)
-        self.driver.get("https://www.blogger.com/about/?bpli=1")
-        self.driver.maximize_window()
-        self.driver.implicitly_wait(10)
-
+    """
+        Steps:
+            1. Initialize driver and necessary page objects.
+            2. Set configuration using the main URL.
+            3. Assert if sign-in option is enabled.
+            4. Click on sign-in.
+            5. Perform login using admin credentials.
+            6. Assert if login is successful.
+            7. Apply editing operation on the home page.
+            8. Assert if update option is enabled.
+            9. Perform teardown actions.
+        """
+    @pytest.mark.run(order=3)
+    def test_adding_post(self,openBrowser):
+        self.logger = loggerInit(self, self.__class__.__name__)
+        self.logger.info("Initializing Edit Post Test...")
+        self.driver = openBrowser
+        self.logger.info("Browser initialized successfully.")
+        self.config = config.ConfigClass(self.driver)
         self.lp = LoginPageObject.LoginPageClass(self.driver)
         self.hp = HomePageObject.HomePageClass(self.driver)
-        self.pp = PostingPageObject.PostingPageClass(self.driver)
 
+        self.logger.info("Setting configuration URL...")
+        self.config.set_by_url(config.main_URL)
         assert self.lp.isSignInEnabled()
+        self.logger.info("Checking if sign-in is enabled...")
         self.lp.clickSignIn()
+        self.logger.info("Clicking on sign-in button...")
         time.sleep(3)
-        self.lp.sendMail("blogger.for.test.ntt@gmail.com")
+        self.logger.info("Applying login credentials...")
+        self.lp.applyLogin(self.lp.admin_mail, self.lp.admin_password)
         time.sleep(3)
-        self.lp.clickNext()
-        time.sleep(3)
-        self.lp.sendPassword("Downloading456.")
-        time.sleep(3)
-        self.lp.clickNext()
-        time.sleep(3)
-        assert self.lp.isLoginSuccessful()
-        self.hp.clickLastPost()
-        time.sleep(3)
-        self.hp.edit_post()
-        time.sleep(3)
-        self.driver.quit()
+        self.logger.info("Verifying login success...")
+        assert self.hp.isLoginSuccessful()
+        self.logger.info("Verifying if update is enabled after edit...")
+        self.hp.applyEdit()
+        assert self.hp.is_update_enabled()
+        self.logger.info("Test completed successfully.")
+        self.config.tearDown()
+
+
+
 
 
 
