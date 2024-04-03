@@ -18,7 +18,6 @@ def openBrowser():
 def loggerInit(self, name):
     logger = logging.getLogger(name)
     logger.setLevel(logging.INFO)
-    # Dosyaya logları yazma
     file_handler = logging.FileHandler(filename="test_log", mode="w")
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     file_handler.setFormatter(formatter)

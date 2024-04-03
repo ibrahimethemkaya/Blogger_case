@@ -14,7 +14,7 @@ class TestCheckDeleted:
             3. Assert if the comment is deleted successfully.
             4. Perform teardown actions.
         """
-    @pytest.mark.run(order=5)
+    @pytest.mark.run(order=6)
     def test_check_deleted(self, openBrowser):
         self.logger = loggerInit(self, self.__class__.__name__)
         self.logger.info("Initializing check deletion test...")

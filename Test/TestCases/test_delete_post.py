@@ -18,7 +18,7 @@ class TestDeletePost:
            8. Wait for a certain duration.
            9. Perform teardown actions.
        """
-    @pytest.mark.run(order=6)
+    @pytest.mark.run(order=7)
     def test_delete_post(self, openBrowser):
         self.logger = loggerInit(self, self.__class__.__name__)
         self.driver = openBrowser

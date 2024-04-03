@@ -20,7 +20,7 @@ class TestDeleteComment:
            9. Perform comment deletion.
            10. Perform teardown actions.
        """
-    @pytest.mark.run(order=4)
+    @pytest.mark.run(order=5)
     def test_delete_comment(self, openBrowser):
         self.driver = openBrowser
         self.logger = loggerInit(self, self.__class__.__name__)

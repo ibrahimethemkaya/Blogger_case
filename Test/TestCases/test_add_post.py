@@ -26,7 +26,7 @@ class TestAddPost:
             9. Assert posting is successful.
             10. Perform teardown actions.
         """
-    @pytest.mark.run(order=1)
+    @pytest.mark.run(order=2)
     def test_adding_post(self,openBrowser):
         self.driver = openBrowser
         self.logger = loggerInit(self, self.__class__.__name__)

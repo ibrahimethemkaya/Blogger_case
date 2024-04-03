@@ -1,3 +1,5 @@
+import pytest
+
 from Test.PageObjectModels import LoginPageObject, HomePageObject
 import time
 from Test.Config import config
@@ -16,7 +18,7 @@ from Test.TestCases.conftest import loggerInit
 # Tear down the test environment.
 
 class TestLogin:
-
+    @pytest.mark.run(order=1)
     def test_login(self, openBrowser):
         self.logger = loggerInit(self, self.__class__.__name__)
         self.logger.info("test starting---")

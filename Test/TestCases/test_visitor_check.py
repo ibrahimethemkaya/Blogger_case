@@ -18,7 +18,7 @@ class TestVisitorCheck:
            7. Send a comment message.
            8. Perform teardown actions.
        """
-    @pytest.mark.run(order=3)
+    @pytest.mark.run(order=4)
     def test_visitor_check(self,openBrowser):
         self.logger = loggerInit(self, self.__class__.__name__)
         self.driver = openBrowser

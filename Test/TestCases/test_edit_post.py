@@ -18,7 +18,7 @@ class TestAddpost:
             8. Assert if update option is enabled.
             9. Perform teardown actions.
         """
-    @pytest.mark.run(order=2)
+    @pytest.mark.run(order=3)
     def test_adding_post(self,openBrowser):
         self.logger = loggerInit(self, self.__class__.__name__)
         self.logger.info("Initializing Edit Post Test...")
